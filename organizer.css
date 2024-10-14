@@ -33,6 +33,12 @@ header {
 
 a {
   color: black;
+  padding-bottom: 10px;
+}
+
+.cursive {
+  font-style: italic;
+  color: rgb(100, 98, 98);
 }
 
 
