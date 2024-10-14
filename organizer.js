@@ -6,74 +6,82 @@ toggle.addEventListener("click", () => {
 })
 
 
+// COPY PASTE FROM https://medium.com/@erp-enterprises/learn-how-to-use-localstorage-in-javascript-with-a-todo-app-b9530d4da813
 
-
-// COPY PASTE FROM https://www.w3schools.com/howto/howto_js_todolist.asp)
-
-// Create a "close" button and append it to each list item
-var myNodelist = document.getElementsByTagName("LI");
-var i;
-for (i = 0; i < myNodelist.length; i++) {
-    var span = document.createElement("SPAN");
-    var txt = document.createTextNode("\u00D7");
-    span.className = "close";
-    span.appendChild(txt);
-    myNodelist[i].appendChild(span);
-}
-
-// Click on a close button to hide the current list item
-var close = document.getElementsByClassName("close");
-var i;
-for (i = 0; i < close.length; i++) {
-    close[i].onclick = function () {
-        var div = this.parentElement;
-        div.style.display = "none";
+/* Metthod for add todo  */
+let addTodo = () => {
+    let todoText = document.getElementById('todo-text').value;
+    if(todoText != ''){
+        setData(todoText); // handler for adding item into local storage
+        listTodo(); // handler for showing item from local storage
     }
 }
 
-// Add a "checked" symbol when clicking on a list item
-var list = document.querySelector('ul');
-list.addEventListener('click', function (ev) {
-    if (ev.target.tagName === 'LI') {
-        ev.target.classList.toggle('checked');
+/* handler for print todo  */
+let listTodo = () => {
+    let html = ``;
+    let data = getData(); // handler for getting item from local storage
+    if(data){
+        html += `<ol>`;
+        data.forEach((value,item
+        ) => {
+            html += `<li>${value} &nbsp;&nbsp;&nbsp;<button onclick="removeData(${item})">Remove</button></li>`;
+        });
+        html += `</ol>`;
     }
-}, false);
+    document.getElementById('todo-item').innerHTML = html;
+}
 
-// Create a new list item when clicking on the "Add" button
-function newElement() {
-    var li = document.createElement("li");
-    var inputValue = document.getElementById("myInput").value;
-    var t = document.createTextNode(inputValue);
-    li.appendChild(t);
-    if (inputValue === '') {
-        alert("You must write something!");
-    } else {
-        document.getElementById("myUL").appendChild(li);
-    }
-    document.getElementById("myInput").value = "";
+ /* handler for get todo  */
+let getData = (item = null) => {
+    /*
+    * localStorage.getItem(<itemname>) main method 
+    * (predefined method of js) for getting item from localstorage
+    */
+    let data = JSON.parse(localStorage.getItem('mytodo')); 
+    if(data){
 
-    var span = document.createElement("SPAN");
-    var txt = document.createTextNode("\u00D7");
-    span.className = "close";
-    span.appendChild(txt);
-    li.appendChild(span);
-
-    for (i = 0; i < close.length; i++) {
-        close[i].onclick = function () {
-            var div = this.parentElement;
-            div.style.display = "none";
+        if(item) {
+            if(data.indexOf(item) != -1){
+                return data[item];
+            }else{
+                return false;
+            }
         }
+        return data;
+    }
+    return false;
+}
+
+listTodo(); // call print handler for showing data into list 
+
+ /* handler for set data/item todo  */
+let setData = (item) => {
+    if(getData(item) != false) {
+        alert("Item already added in todo");
+    }else{
+        let data = getData(); // call getdata handler for getting  data from list 
+        data = (data != false) ? data : []; 
+        data.push(item);
+        data = JSON.stringify(data);
+        /*
+        * localStorage.setItem(<itemname>,<itemvalue>) main method 
+        * (predefined method of js) for set item into localstorage
+        */
+        localStorage.setItem('mytodo',data);
     }
 }
 
-let toDos = localStorage.getItem("toDos") || []
+/* handler for remove item from localstorage */
+let removeData = (itemId) => {
+        let data = getData();
+        if(data){
+            let newData = data.filter((v,i) => { return i != itemId });
+            newData = JSON.stringify(newData);
+            localStorage.setItem('mytodo',newData);
+            listTodo();
+        }else{
+            alert("no data found");
+        }
 
-function addToDoItem() {
-    var inputValue = document.getElementById("myInput").value;
-    var newToDos = toDos.push(inputValue)
-    localStorage.setItem("toDos", newToDos)
-}
-
-function updatetoDoList() {
-    
-}
+} 

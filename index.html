@@ -2,13 +2,12 @@
     <head>
         <title>home</title>
         <link rel="stylesheet" href="organizer.css">
-         <!-- Chat GPT stuff -->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
     </head>
 
-    <body >
+    <body>
         
         <header class="header">
             <nav class="navStyle">
@@ -17,7 +16,6 @@
                 <input type="checkbox" id="toggle">
                 <span class="slider round"></span>
                 </label>
-                <a>Search</a>
             </nav>
 
             
@@ -27,28 +25,16 @@
         <main>
             <section class="sectionStyle">
                 <div class="topics container">
-                    <a href="home.html">section</a>
-                    <p>section</p>
-                    <p>section</p>
-                    <p>section</p>
-                    <p>section</p>
-                    <p>section</p>
+                    <a href="index.html">section</a>
+                    <!--sections??-->
                 
                 </div>
 
                 <div class="items container">
-        
-                    <!-- ITEMS LIST -->
-                    <div>
-                        <ul id="myUL">
-                            
-                        </ul>
-                    
-                    </div>
+                    <input type="text" name="todo-text" id="todo-text" placeholder="add item" />
+                    <button id="todo-add" onclick="addTodo()">Add</button>
+                    <div id="todo-item"></div>
 
-                    <!-- TEXT FIELD (copy paste https://www.w3schools.com/howto/howto_js_todolist.asp) -->
-                    <input type="text" id="myInput" placeholder="add item">
-                    <span onclick="newElement()" class="addBtn">Add</span>
                     
                 </div>
 
